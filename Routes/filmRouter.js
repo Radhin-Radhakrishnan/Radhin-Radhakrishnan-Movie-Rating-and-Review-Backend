@@ -12,3 +12,5 @@ filmrouter.delete('/:reviewId',authenticateToken,deleteTheReviews);
 
 //faviorites of User
 filmrouter.post('/:movieId/favorite', authenticateToken,addFavoriteMovie);
+
+module.exports=filmrouter;

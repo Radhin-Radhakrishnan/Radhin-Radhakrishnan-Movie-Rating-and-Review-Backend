@@ -69,9 +69,11 @@ const updatePassword = async (req, res) => {
       return res.status(400).json({ error: "Authentication failed: Missing email or password." });
     }
     const user = await User.findOne({ email });
+    console.log(user)
     if (!user) {
       return res.status(401).json({ error: "User not found." });
     }
+    const saltRounds=10;
     const hash = bcrypt.hashSync(password, saltRounds);
 
     const updatedUser = await User.findByIdAndUpdate(userId, { password: hash }, { new: true });

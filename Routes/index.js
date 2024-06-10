@@ -6,7 +6,7 @@ const filmRouter=require("./filmRouter.js")
 const adminRouters = require('./adminRouter.js')
 
 router.use('/user', userRoutes)
-router.use('/user', filmRouter)
+router.use('/movie', filmRouter)
 router.use('/admin',adminRouters)
 
 module.exports = router;
