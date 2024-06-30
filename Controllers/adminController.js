@@ -40,7 +40,7 @@ const newAdmin = async (req,res) => {
         await admin.save();
         
         const token = jwt.sign({ data:admin._id }, process.env.SECRET_KEY, { expiresIn: '24h' })
-        res.cookie("token", token)
+    
          const adminResponse = {...admin._doc}
         delete adminResponse.authorization_key;
 
@@ -54,15 +54,15 @@ const newAdmin = async (req,res) => {
 
 }
 
+
 const adminSignin = async (req,res) => {
     try {
-        const firstName = req.body.firstName
-        const lastName= req.body.lastName
+        
         const email = req.body.email;
         const password = req.body.password;
         const authorization_keyValue = req.body.authorization_keyValue;
 
-        if (firstName === undefined || lastName === undefined || email === undefined || password === undefined || authorization_keyValue === undefined) {
+        if ( email === undefined || password === undefined || authorization_keyValue === undefined) {
             return res.status(400).json({error: "Authentification failed: Missing username, email, password and authorization key."});
         }
 

@@ -51,8 +51,8 @@ const signIn = async (req, res) => {
 
  
     const token = generateToken(user._id);
-    res.cookie("token", token,{ httpOnly: true, secure: process.env.NODE_ENV === 'production' });
-    res.send("Logged in!");
+    return res.status(200).json({token,...user._doc, message: "Login Successful"})
+   
   } catch (error) {
     console.error("Error occurred during sign in:", error);
     res.status(500).json({ error: "Internal Server Error" });

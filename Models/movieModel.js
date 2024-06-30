@@ -6,33 +6,33 @@ const MovieSchema = new mongoose.Schema({
         trim: true,
         lowercase: true
     },
-    movieDescription: {
+    mediaDescription: {
         type: String,
         required: true,
         lowercase: true
     },
-    movieGenre: [ {
+    mediaGenre: [ {
         type: String,
         required: true,
         lowercase: true
     } ],
-    movieLanguage: {
+    mediaLanguage: {
         type: String,
         required: true,
         lowercase: true
     },
-    movieImageUrl: {
+    mediaImageUrl: {
         type: String,
     },
-    movieImage: {
+    mediaImage: {
         type: String,
     },
-    moviePublicId: {
+    mediaPublicId: {
         type: String,
-        required: true
+       
     }
 },
-  { timestamps: true },);
+  );
 
 
 const Movie = mongoose.model("Movie",MovieSchema);

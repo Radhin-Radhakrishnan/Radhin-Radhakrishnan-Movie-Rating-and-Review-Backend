@@ -5,6 +5,8 @@ const port = 3000
 const dbConnect= require("./config/dbConfig.js")
 require('dotenv').config()
 
+const { cloudinaryInstance } = require('./config/cloudinary.js');
+
 const allRoutes=require('./Routes/index.js')
 
 

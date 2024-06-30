@@ -1,5 +1,5 @@
 const Movie= require("../Models/movieModel");
-const { cloudinary } = require("../config/cloudinary.js");
+const {cloudinaryInstance} = require("../config/cloudinary.js");
 
 
 const getAddedMovies = async (req, res) => {
@@ -43,62 +43,47 @@ const deleteMovie = async (req, res) => {
 }
 
 const newlyAddedMovie = async (req, res) => {
+    console.log("hitting");
     try {
-        console.log("first")
-        if (!req.body.imageUrl && !req.file.path) {
-            return res.status(400).json({message: "please upload a image "})
+       
+        if (!req.body.image && !(req.file && req.file.path) && !req.body.imageUrl) {
+            return res.status(400).json({ message: "please upload an image" });
         }
-        if (req.body.imageUrl) {
-            const imageUrlresult = await cloudinary.uploader.upload(req.body.imageUrl, { fetch_format: 'auto' });
-            const { name, description, genre, language } = req.body;
-            const title = name;
-            const mediaDescription = description;
-            const mediaGenre = genre;
-            const mediaLanguage = language;
-            const mediaImageUrl = imageUrlresult.secure_url
-            const mediaPublicId = imageUrlresult.public_id
+        
+        let  mediaPublicId,imageLink;
+        const { name, description, genre, language,imageUrl } = req.body;
+        const title = name;
+        const mediaDescription = description;
+        const mediaGenre = genre;
+        const mediaLanguage = language;
+        console.log(imageUrl);
 
-            const movies = new Movie({
-                title,
-                mediaDescription,
-                mediaGenre,
-                mediaLanguage,
-                mediaImageUrl,
-                mediaPublicId
-            });
-    
-            await movies.save();
-    
-            return res.status(201).json({movies, message: "Movie added"});
-
-        }
-        if (req.file.path) {
-            console.log("second")
-            const result = await cloudinary.uploader.upload(req.file.path);
-            const { name, description, genre, language } = req.body;
-            const title = name;
-            const mediaDescription = description;
-            const mediaGenre = genre;
-            const mediaLanguage = language;
-            const mediaImage = result.secure_url;
-            const mediaPublicId = result.public_id
-    
-            const movies = new Movie({
-                title,
-                mediaDescription,
-                mediaGenre,
-                mediaLanguage,
-                mediaImage,
-                mediaPublicId
-            });
-    
-            await movies.save();
-            return res.status(201).json({movies, message: "Movie added"});
+        if (imageUrl) {
+            const imageUrlresult = await cloudinaryInstance.uploader.upload(imageUrl);
+            imageLink = imageUrlresult.url;
+            mediaPublicId = imageUrlresult.public_id;
         } 
+        console.log("working")
 
-    } catch (error) {
-        console.log("added new movie failed: ", error);
-        res.status(500).json({ message: "Operation failed" })
+        const movie = new Movie({
+            title,
+            mediaDescription,
+            mediaGenre,
+            mediaLanguage,
+            mediaImageUrl: imageLink,
+            mediaPublicId
+        });
+
+        await movie.save();
+
+        return res.status(201).json({ movie, message: "Movie added" });
+
+    } 
+    
+    catch (error) {
+        console.log("second");
+        console.log("Adding new movie failed: ", error);
+        res.status(500).json({ message: "Operation failed" });
     }
 }
 const updateAMovieDetails = async (req, res) => {
