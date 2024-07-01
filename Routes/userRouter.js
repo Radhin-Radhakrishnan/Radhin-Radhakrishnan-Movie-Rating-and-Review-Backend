@@ -2,7 +2,7 @@ const express = require('express');
 const userRouter = express.Router();
 const { signUp, signIn, updatePassword, getUserById } = require("../Controllers/userController.js");
 const authenticateToken = require('../Middleware/tokenVerify.js');
-const { getAllFavoritesOfuser, deleteFavoriteItem } = require('../Controllers/FavoriteController.js');
+const { getAllFavoritesOfuser, deleteFavoriteItem } = require('../Controllers/favoriteController.js');
 const { getAllTheReviewsOfUser } = require('../Controllers/reviewController.js');
 
 userRouter.post('/signUp', signUp);
