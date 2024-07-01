@@ -1,7 +1,7 @@
 const express = require('express');
 const authenticateToken=require('../Middleware/tokenVerify.js');
 const { getAllTheReviewsOfmovieBySingleUser, getAllTheReviewsOfmovie, addMovieReview, deleteTheReviews} = require('../Controllers/reviewController');
-const { addFavoriteMovie } = require('../Controllers/FavoriteController.js');
+const { addFavoriteMovie } = require('../Controllers/favoriteController.js');
 
 const filmrouter = express.Router();
 
