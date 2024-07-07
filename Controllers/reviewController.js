@@ -70,7 +70,7 @@ const getAllTheReviewsOfmovie = async (req, res) => {
       const users = await User.find({_id: userId})
       
   
-      res.status(200).json({reviews, users: users.map(user => [ { username:user.username, id: user.id }])} );
+      res.status(200).json({reviews, users: users.map(user => [{ firstName:user.firstName, id: user.id }])} );
     } catch (error) {
       console.error("Error getting user reviews:", error);
       res.status(500).json({ error: "Failed to retrieve reviews" }); // More specific error message
